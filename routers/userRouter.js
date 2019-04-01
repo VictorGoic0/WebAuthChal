@@ -30,16 +30,22 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const user = req.body;
-  try {
-    const newUser = await db.create(user);
-    if (newUser) {
-      res.status(201).json(newUser);
+  let { username, password } = req.body;
+  if (!username || !password) {
+    res.status(401).json({ message: "Please enter valid credentials." });
+  } else {
+    const hash = bcrypt.hashSync(password, 8);
+    password = hash;
+    try {
+      const newUser = await db.create({ username, password });
+      if (newUser) {
+        res.status(201).json(newUser);
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: `Your user could not be created ${error}.` });
     }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: `Your user could not be usered ${error}.` });
   }
 });
 
