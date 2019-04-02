@@ -20,7 +20,7 @@ exports.seed = async function(knex, Promise) {
   fs.writeFileSync("./authTestInfo.json", JSON.stringify({ users: fakeUsers }));
 
   fakeUsers.map(user => {
-    user.password = bcrypt.hashSync(user.password, 4);
+    user.password = bcrypt.hashSync(user.password, 8);
   });
 
   return await knex("users").insert(fakeUsers);
