@@ -9,7 +9,7 @@ const userRouter = require("./routers/userRouter.js");
 const server = express();
 
 const sessionConfig = {
-  name: "monster",
+  name: "cookie",
   secret: "keep it secret, keep it salty",
   cookie: {
     maxAge: null,
