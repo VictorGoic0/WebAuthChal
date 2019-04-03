@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  if (req.session) {
+  if (req.session && req.session.userID) {
     req.session.destroy(err => {
       if (err) {
         res.status(500).json({ message: "You can never leave" });
